@@ -9,6 +9,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.apache.poi:poi-ooxml:3.16'
+
     testCompile 'junit:junit:4.12'
 }
 
