@@ -18,6 +18,7 @@ public class BenrippoiUtilTest {
         wb.close();
     }
 
+    @Test
     public void cellIndexToCellNameTest() {
         assertThat(BenrippoiUtil.cellIndexToCellName(0, 0), is("A1"));
         assertThat(BenrippoiUtil.cellIndexToCellName(1, 0), is("B1"));
