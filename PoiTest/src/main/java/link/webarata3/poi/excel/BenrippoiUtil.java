@@ -37,9 +37,6 @@ public class BenrippoiUtil {
     }
 
     private static String dec26(int num, int first) {
-        if (num > 25) {
-            return dec26(num / 26, 1) + (char) ('A' + (num - first) % 26);
-        }
-        return String.valueOf((char) ('A' + (num - first) % 26));
+        return (num > 25 ? dec26(num / 26, 1) : "") + String.valueOf((char) ('A' + (num - first) % 26));
     }
 }
