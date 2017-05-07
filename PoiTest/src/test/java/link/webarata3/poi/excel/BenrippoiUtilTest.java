@@ -19,7 +19,7 @@ public class BenrippoiUtilTest {
 
     @Test
     public void openTest() throws IOException {
-        File tempFile = new File(tempFolder.getRoot(), "temp.xlsx");
+        File tempFile = tempFolder.newFile();
         Files.copy(this.getClass().getResourceAsStream("book1.xlsx"), tempFile.toPath());
         Optional<Workbook> optionalWb = BenrippoiUtil.open(Files.newInputStream(tempFile.toPath()));
         assertThat(optionalWb.isPresent(), is(true));
