@@ -3,16 +3,25 @@ package link.webarata3.poi.excel;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class BenrippoiUtilTest {
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
     @Test
     public void openTest() throws IOException {
-        Optional<Workbook> optionalWb = BenrippoiUtil.open(this.getClass().getResourceAsStream("book1.xlsx"));
+        File tempFile = new File(tempFolder.getRoot(), "temp.xlsx");
+        Files.copy(this.getClass().getResourceAsStream("book1.xlsx"), tempFile.toPath());
+        Optional<Workbook> optionalWb = BenrippoiUtil.open(Files.newInputStream(tempFile.toPath()));
         assertThat(optionalWb.isPresent(), is(true));
         Workbook wb = optionalWb.get();
         wb.close();
