@@ -21,9 +21,9 @@ public class JcifsTest {
         }
 
         Config.setProperties(properties);
-        // ここからファイル読み込みサンプル
-        try (SmbFileInputStream sfis = new SmbFileInputStream("smb://192.168.1.11/public/鍵.txt")) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(sfis));
+
+        try (SmbFileInputStream sfis = new SmbFileInputStream("smb://192.168.1.11/public/鍵.txt");
+                BufferedReader br = new BufferedReader(new InputStreamReader(sfis))) {
 
             String line = null;
 
@@ -33,6 +33,5 @@ public class JcifsTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
