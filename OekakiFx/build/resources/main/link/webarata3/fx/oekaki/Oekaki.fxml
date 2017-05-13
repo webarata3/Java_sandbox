@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+ fx:controller="link.webarata3.fx.oekaki.OekakiController">
+ <left>
+  <Button text="赤" onAction="#onClickRedButton" />
+ </left>
+ <center>
+  <Canvas fx:id="canvas" width="300" height="300" onMousePressed="#onMousePressed"
+   onMouseDragged="#onMouseDragged" />
+ </center>
+</BorderPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+ fx:controller="link.webarata3.fx.oekaki.OekakiController">
+ <top>
+  <MenuBar>
+   <menus>
+    <Menu text="_File" />
+    <Menu text="_Edit" />
+   </menus>
+  </MenuBar>
+ </top>
+ <left>
+  <VBox>
+   <children>
+    <Button text="黒" onAction="#onClickBlackButton" />
+    <Button text="赤" onAction="#onClickRedButton" />
+    <Button text="緑" onAction="#onClickGreenButton" />
+    <Button text="青" onAction="#onClickBlueButton" />
+   </children>
+  </VBox>
+ </left>
+ <center>
+  <Canvas fx:id="canvas" width="300" height="300" onMousePressed="#onMousePressed"
+   onMouseDragged="#onMouseDragged" />
+ </center>
+</BorderPane>
