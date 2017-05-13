@@ -9,7 +9,12 @@
  <top>
   <MenuBar>
    <menus>
-    <Menu text="_File" />
+    <Menu text="_File">
+     <items>
+      <MenuItem text="_Open" />
+      <MenuItem text="E_xit" onAction="#onActionExit" />
+     </items>
+    </Menu>
     <Menu text="_Edit" />
    </menus>
   </MenuBar>

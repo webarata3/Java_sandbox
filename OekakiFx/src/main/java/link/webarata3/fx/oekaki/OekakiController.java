@@ -3,6 +3,7 @@ package link.webarata3.fx.oekaki;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +27,11 @@ public class OekakiController implements Initializable {
     private void onMouseDragged(MouseEvent event) {
         gc.lineTo(event.getX(), event.getY());
         gc.stroke();
+    }
+
+    @FXML
+    public void onActionExit(ActionEvent event) {
+        Platform.exit();
     }
 
     @FXML
