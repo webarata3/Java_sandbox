@@ -7,15 +7,15 @@
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
  fx:controller="link.webarata3.fx.oekaki.OekakiController">
  <top>
-  <MenuBar>
+  <MenuBar useSystemMenuBar="true">
    <menus>
-    <Menu text="_File">
+    <Menu text="ファイル">
      <items>
-      <MenuItem text="_Open" />
-      <MenuItem text="E_xit" onAction="#onActionExit" />
+      <MenuItem text="開く" />
+      <MenuItem text="保存" onAction="#onActionSaveAs" />
+      <MenuItem text="終了" onAction="#onActionExit" />
      </items>
     </Menu>
-    <Menu text="_Edit" />
    </menus>
   </MenuBar>
  </top>
