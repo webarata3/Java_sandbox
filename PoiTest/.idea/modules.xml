@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PoiTest.iml" filepath="$PROJECT_DIR$/.idea/modules/PoiTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PoiTest_main.iml" filepath="$PROJECT_DIR$/.idea/modules/PoiTest_main.iml" group="PoiTest" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PoiTest_test.iml" filepath="$PROJECT_DIR$/.idea/modules/PoiTest_test.iml" group="PoiTest" />
+    </modules>
+  </component>
+</project>

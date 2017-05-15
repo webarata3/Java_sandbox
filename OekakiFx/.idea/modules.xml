@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OekakiFx.iml" filepath="$PROJECT_DIR$/.idea/modules/OekakiFx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OekakiFx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/OekakiFx_main.iml" group="OekakiFx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OekakiFx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/OekakiFx_test.iml" group="OekakiFx" />
+    </modules>
+  </component>
+</project>

@@ -1,6 +1,5 @@
-/.classpath
 /.gradle/
-/.project
-/.settings/
-/bin/
+/.idea/libraries/
+/.idea/tasks.xml
+/.idea/workspace.xml
 /src/main/resources/jcifs.properties

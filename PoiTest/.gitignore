@@ -1,5 +1,4 @@
-/.classpath
 /.gradle/
-/.settings/
-/bin/
-/.project
+/.idea/libraries/
+/.idea/tasks.xml
+/.idea/workspace.xml
