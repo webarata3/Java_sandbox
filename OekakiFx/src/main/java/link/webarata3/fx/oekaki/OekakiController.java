@@ -43,7 +43,7 @@ public class OekakiController implements Initializable {
         }
     }
 
-    double h = 0.0;
+    private double h = 0.0;
 
     private void rainbowPen(double x, double y, double transformValue) {
         gc.beginPath();
