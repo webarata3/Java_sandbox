@@ -26,6 +26,7 @@
     <Button text="赤" onAction="#onClickRedButton" />
     <Button text="緑" onAction="#onClickGreenButton" />
     <Button text="青" onAction="#onClickBlueButton" />
+    <Button text="虹" onAction="#onClickRainbowButton" />
    </children>
   </VBox>
  </left>

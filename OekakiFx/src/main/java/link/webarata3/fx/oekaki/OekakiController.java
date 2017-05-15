@@ -27,6 +27,8 @@ public class OekakiController implements Initializable {
 
     private GraphicsContext gc;
 
+    private boolean isRainbowPen = false;
+
     @FXML
     private void onMousePressed(MouseEvent event) {
         gc.moveTo(event.getX(), event.getY());
@@ -36,6 +38,22 @@ public class OekakiController implements Initializable {
     private void onMouseDragged(MouseEvent event) {
         gc.lineTo(event.getX(), event.getY());
         gc.stroke();
+        if (isRainbowPen) {
+            rainbowPen(event.getX(), event.getY(), 3);
+        }
+    }
+
+    double h = 0.0;
+
+    private void rainbowPen(double x, double y, double transformValue) {
+        gc.beginPath();
+        gc.moveTo(x, y);
+
+        gc.setStroke(ColorUtil.hsvToRgb(h, 255.0, 255.0));
+        h = h + transformValue;
+        if (h >= 360.0) {
+            h = 0.0;
+        }
     }
 
     @FXML
@@ -63,24 +81,35 @@ public class OekakiController implements Initializable {
     private void onClickBlackButton(ActionEvent event) {
         gc.beginPath();
         gc.setStroke(Color.BLACK);
+        isRainbowPen = false;
     }
 
     @FXML
     private void onClickRedButton(ActionEvent event) {
         gc.beginPath();
         gc.setStroke(Color.RED);
+        isRainbowPen = false;
     }
 
     @FXML
     private void onClickGreenButton(ActionEvent event) {
         gc.beginPath();
         gc.setStroke(Color.GREEN);
+        isRainbowPen = false;
     }
 
     @FXML
     private void onClickBlueButton(ActionEvent event) {
         gc.beginPath();
         gc.setStroke(Color.BLUE);
+        isRainbowPen = false;
+    }
+
+    @FXML
+    private void onClickRainbowButton(ActionEvent event) {
+        gc.beginPath();
+        gc.setStroke(Color.BLACK);
+        isRainbowPen = true;
     }
 
     @Override
