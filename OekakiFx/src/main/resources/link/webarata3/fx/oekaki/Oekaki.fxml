@@ -5,33 +5,27 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
- fx:controller="link.webarata3.fx.oekaki.OekakiController">
+            fx:controller="link.webarata3.fx.oekaki.OekakiController">
  <top>
   <MenuBar useSystemMenuBar="true">
-   <menus>
-    <Menu text="ファイル">
-     <items>
-      <MenuItem text="開く" />
-      <MenuItem text="保存" onAction="#onActionSaveAs" />
-      <MenuItem text="終了" onAction="#onActionExit" />
-     </items>
-    </Menu>
-   </menus>
+   <Menu text="ファイル">
+    <MenuItem text="開く"/>
+    <MenuItem text="保存" onAction="#onActionSaveAs"/>
+    <MenuItem text="終了" onAction="#onActionExit"/>
+   </Menu>
   </MenuBar>
  </top>
  <left>
   <VBox>
-   <children>
-    <Button text="黒" onAction="#onClickBlackButton" />
-    <Button text="赤" onAction="#onClickRedButton" />
-    <Button text="緑" onAction="#onClickGreenButton" />
-    <Button text="青" onAction="#onClickBlueButton" />
-    <Button text="虹" onAction="#onClickRainbowButton" />
-   </children>
+   <Button text="黒" onAction="#onClickBlackButton"/>
+   <Button text="赤" onAction="#onClickRedButton"/>
+   <Button text="緑" onAction="#onClickGreenButton"/>
+   <Button text="青" onAction="#onClickBlueButton"/>
+   <Button text="虹" onAction="#onClickRainbowButton"/>
   </VBox>
  </left>
  <center>
   <Canvas fx:id="canvas" width="300" height="300" onMousePressed="#onMousePressed"
-   onMouseDragged="#onMouseDragged" />
+          onMouseDragged="#onMouseDragged"/>
  </center>
 </BorderPane>

@@ -77,38 +77,37 @@ public class OekakiController implements Initializable {
         Platform.exit();
     }
 
+    private void beginPath(Color color) {
+        gc.beginPath();
+        gc.setStroke(color);
+        isRainbowPen = false;
+    }
+
+
     @FXML
     private void onClickBlackButton(ActionEvent event) {
-        gc.beginPath();
-        gc.setStroke(Color.BLACK);
-        isRainbowPen = false;
+        beginPath(Color.BLACK);
     }
 
     @FXML
     private void onClickRedButton(ActionEvent event) {
-        gc.beginPath();
-        gc.setStroke(Color.RED);
-        isRainbowPen = false;
+        beginPath(Color.RED);
     }
 
     @FXML
     private void onClickGreenButton(ActionEvent event) {
-        gc.beginPath();
-        gc.setStroke(Color.GREEN);
-        isRainbowPen = false;
+        beginPath(Color.GREEN);
     }
 
     @FXML
     private void onClickBlueButton(ActionEvent event) {
-        gc.beginPath();
-        gc.setStroke(Color.BLUE);
-        isRainbowPen = false;
+        beginPath(Color.BLUE);
     }
 
     @FXML
     private void onClickRainbowButton(ActionEvent event) {
         gc.beginPath();
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(ColorUtil.hsvToRgb(h, 255.0, 255.0));
         isRainbowPen = true;
     }
 
