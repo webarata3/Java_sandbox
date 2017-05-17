@@ -16,6 +16,7 @@ public class InvaderApp extends Application {
 
         InvaderController invaderController = (InvaderController) loader.getController();
         invaderController.setScene(scene);
+        invaderController.setupEvent();
 
         stage.setScene(scene);
         stage.show();

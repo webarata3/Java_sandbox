@@ -33,9 +33,18 @@ public class InvaderController implements Initializable {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+
+    public void setupEvent() {
         scene.setOnKeyPressed(event -> {
             System.out.println(event.getCode());
         });
+        drawRect();
+    }
+
+    public void drawRect(){
+        gc.setFill(Color.RED);
+        gc.fillRect(50, 50, 50, 20);
     }
 
     @FXML
