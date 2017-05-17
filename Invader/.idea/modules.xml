@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/invader.iml" filepath="$PROJECT_DIR$/.idea/modules/invader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/invader_main.iml" filepath="$PROJECT_DIR$/.idea/modules/invader_main.iml" group="invader" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/invader_test.iml" filepath="$PROJECT_DIR$/.idea/modules/invader_test.iml" group="invader" />
+    </modules>
+  </component>
+</project>
