@@ -25,11 +25,11 @@ public class InvaderController implements Initializable {
 
     public void setup(Scene scene) {
         ufo = new Ufo(new Image(getClass().getResourceAsStream("ufo.png")),
-            0, 400, 3 ,3, canvas.getWidth(), canvas.getHeight());
+            0, 400, 3, 3, canvas.getWidth(), canvas.getHeight());
         new AnimationTimer() {
             @Override
             public void handle(long currentNanoTime) {
-                gc.clearRect(0, 0, 640, 480);
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 if (inputSet.contains("LEFT")) {
                     ufo.moveLeft();
                 } else if (inputSet.contains("RIGHT")) {
