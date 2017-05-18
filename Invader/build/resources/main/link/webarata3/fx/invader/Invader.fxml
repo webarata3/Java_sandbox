@@ -7,6 +7,6 @@
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="link.webarata3.fx.invader.InvaderController">
  <center>
-  <Canvas fx:id="canvas" width="600" height="400" />
+  <Canvas fx:id="canvas" width="640" height="480" />
  </center>
 </BorderPane>
