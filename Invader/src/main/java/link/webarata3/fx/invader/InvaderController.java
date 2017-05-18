@@ -19,17 +19,11 @@ public class InvaderController implements Initializable {
 
     private GraphicsContext gc;
 
-    private Scene scene;
-
     private Ufo ufo;
 
     private Set<String> inputSet;
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public void setupEvent() {
+    public void setup(Scene scene) {
         ufo = new Ufo(new Image(getClass().getResourceAsStream("ufo.png")),
             0, 400, 3 ,3, canvas.getWidth(), canvas.getHeight());
         new AnimationTimer() {
