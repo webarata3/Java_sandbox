@@ -24,7 +24,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  * Apache POIのラッパークラスです。
- * 
+ *
  * @author webarata3
  */
 public class BenrippoiUtil {
@@ -104,30 +104,49 @@ public class BenrippoiUtil {
 
     public static String cellToString(Cell cell) {
         switch (cell.getCellTypeEnum()) {
-        case STRING:
-            return cell.getStringCellValue();
-        case NUMERIC:
-            return normalizeNumericString(cell.getNumericCellValue());
-        case BOOLEAN:
-            return String.valueOf(cell.getBooleanCellValue());
-        case BLANK:
-            return "";
-        case FORMULA:
-            CellValue cellValue = getFomulaCellValue(cell);
-            switch (cellValue.getCellTypeEnum()) {
             case STRING:
-                return cellValue.getStringValue();
+                return cell.getStringCellValue();
             case NUMERIC:
-                return normalizeNumericString(cellValue.getNumberValue());
+                return normalizeNumericString(cell.getNumericCellValue());
             case BOOLEAN:
-                return String.valueOf(cellValue.getBooleanValue());
+                return String.valueOf(cell.getBooleanCellValue());
             case BLANK:
                 return "";
+            case FORMULA:
+                CellValue cellValue = getFomulaCellValue(cell);
+                switch (cellValue.getCellTypeEnum()) {
+                    case STRING:
+                        return cellValue.getStringValue();
+                    case NUMERIC:
+                        return normalizeNumericString(cellValue.getNumberValue());
+                    case BOOLEAN:
+                        return String.valueOf(cellValue.getBooleanValue());
+                    case BLANK:
+                        return "";
+                    default: // _NONE, ERROR
+                        throw new IllegalStateException("cellはStringに変換できません");
+                }
             default: // _NONE, ERROR
                 throw new IllegalStateException("cellはStringに変換できません");
-            }
-        default: // _NONE, ERROR
-            throw new IllegalStateException("cellはStringに変換できません");
+        }
+    }
+
+    private static int stringToInt(String value) {
+        try {
+            return (int) Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("cellはintに変換できません");
+        }
+    }
+
+    public static int CellToInt(Cell cell) {
+        switch (cell.getCellTypeEnum()) {
+            case STRING:
+                return stringToInt(cell.getStringCellValue());
+            case NUMERIC:
+                return (int) cell.getNumericCellValue();
+            default:
+                throw new IllegalStateException("cellはintに変換できません");
         }
     }
 }
