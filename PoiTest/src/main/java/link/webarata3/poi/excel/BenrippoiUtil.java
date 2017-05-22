@@ -124,10 +124,10 @@ public class BenrippoiUtil {
                     case BLANK:
                         return "";
                     default: // _NONE, ERROR
-                        throw new IllegalStateException("cellはStringに変換できません");
+                        throw new PoiIllegalAccessException("cellはStringに変換できません");
                 }
             default: // _NONE, ERROR
-                throw new IllegalStateException("cellはStringに変換できません");
+                throw new PoiIllegalAccessException("cellはStringに変換できません");
         }
     }
 
@@ -139,14 +139,53 @@ public class BenrippoiUtil {
         }
     }
 
-    public static int CellToInt(Cell cell) {
+    public static int cellToInt(Cell cell) {
         switch (cell.getCellTypeEnum()) {
             case STRING:
                 return stringToInt(cell.getStringCellValue());
             case NUMERIC:
                 return (int) cell.getNumericCellValue();
+            case FORMULA:
+                CellValue cellValue = getFomulaCellValue(cell);
+                switch (cellValue.getCellTypeEnum()) {
+                    case STRING:
+                        return stringToInt(cellValue.getStringValue());
+                    case NUMERIC:
+                        return (int) cellValue.getNumberValue();
+                    default:
+                        throw new PoiIllegalAccessException("cellはintに変換できません");
+                }
             default:
-                throw new IllegalStateException("cellはintに変換できません");
+                throw new PoiIllegalAccessException("cellはintに変換できません");
+        }
+    }
+
+    private static double stringToDouble(String value) {
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            throw new PoiIllegalAccessException("cellはdoubleに変換できません");
+        }
+    }
+
+    public static double cellToDouble(Cell cell) {
+        switch(cell.getCellTypeEnum()) {
+            case STRING:
+                return stringToDouble(cell.getStringCellValue());
+            case NUMERIC:
+                return cell.getNumericCellValue();
+            case FORMULA:
+                CellValue cellValue = getFomulaCellValue(cell);
+                switch(cellValue.getCellTypeEnum()) {
+                    case STRING:
+                        return stringToDouble(cell.getStringCellValue());
+                    case NUMERIC:
+                        return cell.getNumericCellValue();
+                    default:
+                        throw new PoiIllegalAccessException("cellはdoubleに変換できません");
+                }
+            default:
+                throw new PoiIllegalAccessException("cellはdoubleに変換できません");
         }
     }
 }

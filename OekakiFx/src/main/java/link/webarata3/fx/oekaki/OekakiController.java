@@ -1,12 +1,5 @@
 package link.webarata3.fx.oekaki;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javax.imageio.ImageIO;
-
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -20,6 +13,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import link.webarata3.fx.oekaki.command.Command;
+import link.webarata3.fx.oekaki.command.CommandHistory;
+import link.webarata3.fx.oekaki.command.CommandUnit;
+import link.webarata3.fx.oekaki.command.StrokeCommand;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class OekakiController implements Initializable {
     @FXML
@@ -27,34 +30,39 @@ public class OekakiController implements Initializable {
 
     private GraphicsContext gc;
 
-    private boolean isRainbowPen = false;
+    private Color currentColor;
+    private double currentLineWidth;
+    private double startX;
+    private double startY;
+
+    private CommandHistory commandHistory;
+    private CommandUnit currentCommandUnit;
 
     @FXML
     private void onMousePressed(MouseEvent event) {
-        gc.moveTo(event.getX(), event.getY());
+        currentCommandUnit = new CommandUnit();
+        commandHistory.add(currentCommandUnit);
+        startX = event.getX();
+        startY = event.getY();
+    }
+
+    @FXML
+    private void onMouseReleased(MouseEvent event) {
+        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(), event.getY());
+        command.execute();
+        currentCommandUnit.add(command);
     }
 
     @FXML
     private void onMouseDragged(MouseEvent event) {
-        gc.lineTo(event.getX(), event.getY());
-        gc.stroke();
-        if (isRainbowPen) {
-            rainbowPen(event.getX(), event.getY(), 3);
-        }
+        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(), event.getY());
+        command.execute();
+        currentCommandUnit.add(command);
+        startX = event.getX();
+        startY = event.getY();
     }
 
     private double h = 0.0;
-
-    private void rainbowPen(double x, double y, double transformValue) {
-        gc.beginPath();
-        gc.moveTo(x, y);
-
-        gc.setStroke(ColorUtil.hsvToRgb(h, 255.0, 255.0));
-        h = h + transformValue;
-        if (h >= 360.0) {
-            h = 0.0;
-        }
-    }
 
     @FXML
     private void onActionSaveAs(ActionEvent event) {
@@ -77,43 +85,47 @@ public class OekakiController implements Initializable {
         Platform.exit();
     }
 
-    private void beginPath(Color color) {
-        gc.beginPath();
-        gc.setStroke(color);
-        isRainbowPen = false;
+    private void stroke(Color color) {
+        currentColor = color;
     }
 
 
     @FXML
     private void onClickBlackButton(ActionEvent event) {
-        beginPath(Color.BLACK);
+        stroke(Color.BLACK);
     }
 
     @FXML
     private void onClickRedButton(ActionEvent event) {
-        beginPath(Color.RED);
+        stroke(Color.RED);
     }
 
     @FXML
     private void onClickGreenButton(ActionEvent event) {
-        beginPath(Color.GREEN);
+        stroke(Color.GREEN);
     }
 
     @FXML
     private void onClickBlueButton(ActionEvent event) {
-        beginPath(Color.BLUE);
+        stroke(Color.BLUE);
     }
 
     @FXML
-    private void onClickRainbowButton(ActionEvent event) {
-        gc.beginPath();
-        gc.setStroke(ColorUtil.hsvToRgb(h, 255.0, 255.0));
-        isRainbowPen = true;
+    private void onClickBoldButton(ActionEvent event) {
+        currentLineWidth += 1;
+    }
+
+    @FXML
+    private void onClickUndoButton(ActionEvent event) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        commandHistory.undo();
+        commandHistory.execute();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(3);
+        commandHistory = new CommandHistory();
+        currentLineWidth = 1;
     }
 }

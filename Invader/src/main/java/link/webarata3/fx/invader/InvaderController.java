@@ -26,6 +26,7 @@ public class InvaderController implements Initializable {
     public void setup(Scene scene) {
         ufo = new Ufo(new Image(getClass().getResourceAsStream("ufo.png")),
             0, 400, 3, 0, canvas.getWidth(), canvas.getHeight());
+
         new AnimationTimer() {
             @Override
             public void handle(long currentNanoTime) {

@@ -15,6 +15,6 @@ public class WrapperCell {
     }
 
     public int toInt() {
-       return BenrippoiUtil.CellToInt(cell);
+       return BenrippoiUtil.cellToInt(cell);
     }
 }
