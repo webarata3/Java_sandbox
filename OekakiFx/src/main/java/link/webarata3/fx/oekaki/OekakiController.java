@@ -97,26 +97,6 @@ public class OekakiController implements Initializable {
     }
 
     @FXML
-    private void onClickBlackButton(ActionEvent event) {
-        stroke(Color.BLACK);
-    }
-
-    @FXML
-    private void onClickRedButton(ActionEvent event) {
-        stroke(Color.RED);
-    }
-
-    @FXML
-    private void onClickGreenButton(ActionEvent event) {
-        stroke(Color.GREEN);
-    }
-
-    @FXML
-    private void onClickBlueButton(ActionEvent event) {
-        stroke(Color.BLUE);
-    }
-
-    @FXML
     private void onClickBoldButton(ActionEvent event) {
         currentLineWidth += 1;
     }
