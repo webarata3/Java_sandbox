@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -89,6 +90,11 @@ public class OekakiController implements Initializable {
         currentColor = color;
     }
 
+
+    @FXML
+    private void onClickColorPicker(ActionEvent event) {
+        stroke(((ColorPicker)event.getSource()).getValue());
+    }
 
     @FXML
     private void onClickBlackButton(ActionEvent event) {

@@ -17,6 +17,7 @@
     </Menu>
    </MenuBar>
    <HBox>
+    <ColorPicker onAction="#onClickColorPicker"/>
     <Button text="黒" onAction="#onClickBlackButton"/>
     <Button text="赤" onAction="#onClickRedButton"/>
     <Button text="緑" onAction="#onClickGreenButton"/>
