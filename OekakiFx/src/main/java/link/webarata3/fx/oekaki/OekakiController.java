@@ -26,7 +26,6 @@ import link.webarata3.fx.oekaki.command.CommandUnit;
 import link.webarata3.fx.oekaki.command.StrokeCommand;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +34,6 @@ import java.util.ResourceBundle;
 public class OekakiController implements Initializable {
     @FXML
     private Canvas canvas;
-
-    @FXML
-    private Slider lineWidthSlider;
 
     @FXML
     private ComboBox lineWidthComboBox;
@@ -110,9 +106,7 @@ public class OekakiController implements Initializable {
 
     @FXML
     private void onClickLineWidthComboBOx(ActionEvent event) {
-      String value = ((ComboBox<String>) event.getSource()).getSelectionModel().getSelectedItem().toString();
-      System.out.println(value);
-      currentLineWidth = Integer.parseInt(value);
+        currentLineWidth = Integer.parseInt(lineWidthComboBox.getValue().toString());
     }
 
     @FXML
@@ -132,14 +126,9 @@ public class OekakiController implements Initializable {
         gc = canvas.getGraphicsContext2D();
         commandHistory = new CommandHistory();
         currentLineWidth = 1;
-        lineWidthSlider.valueProperty().addListener((ObservableValue<? extends Number>
-                                                         observable, Number oldVal, Number newVal) -> {
-            int newValue = (int) Math.round(newVal.doubleValue());
-            System.out.println(newValue);
-        });
 
         ObservableList<Integer> options = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 10, 16, 24, 36);
         lineWidthComboBox.setItems(options);
-        lineWidthComboBox.setEditable(true);
+        lineWidthComboBox.getSelectionModel().selectFirst();
     }
 }
