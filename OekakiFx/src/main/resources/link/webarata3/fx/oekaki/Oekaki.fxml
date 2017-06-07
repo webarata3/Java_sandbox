@@ -17,7 +17,12 @@
     </Menu>
    </MenuBar>
    <HBox>
-    <ColorPicker onAction="#onClickColorPicker"/>
+    <ColorPicker onAction="#onClickColorPicker" />
+    <ComboBox fx:id="lineWidthComboBox" onAction="#onClickLineWidthComboBOx" maxWidth="60"/>
+    <Slider fx:id="lineWidthSlider"
+            min="1" max="100" value="3"
+            showTickLabels="true" showTickMarks="true"
+            majorTickUnit="49" snapToTicks="true"/>
     <Button text="太" onAction="#onClickBoldButton"/>
     <Button text="戻" onAction="#onClickUndoButton"/>
    </HBox>
