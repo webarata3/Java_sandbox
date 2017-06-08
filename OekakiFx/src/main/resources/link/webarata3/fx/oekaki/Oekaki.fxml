@@ -5,27 +5,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import link.webarata3.fx.oekaki.LineWidthCell?>
+
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="link.webarata3.fx.oekaki.OekakiController">
+ fx:controller="link.webarata3.fx.oekaki.OekakiController">
  <top>
   <VBox>
    <MenuBar useSystemMenuBar="true">
     <Menu text="ファイル">
-     <MenuItem text="開く"/>
-     <MenuItem text="保存" onAction="#onActionSaveAs"/>
-     <MenuItem text="終了" onAction="#onActionExit"/>
+     <MenuItem text="開く" />
+     <MenuItem text="保存" onAction="#onActionSaveAs" />
+     <MenuItem text="終了" onAction="#onActionExit" />
     </Menu>
    </MenuBar>
    <HBox>
     <ColorPicker onAction="#onClickColorPicker" />
-    <ComboBox fx:id="lineWidthComboBox" onAction="#onClickLineWidthComboBOx" maxWidth="60"/>
-    <Button text="太" onAction="#onClickBoldButton"/>
-    <Button text="戻" onAction="#onClickUndoButton"/>
+    <ComboBox fx:id="lineWidthComboBox" onAction="#onClickLineWidthComboBox" />
+    <Button text="戻" onAction="#onClickUndoButton" />
    </HBox>
   </VBox>
  </top>
  <center>
   <Canvas fx:id="canvas" width="300" height="300" onMousePressed="#onMousePressed"
-          onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased"/>
+   onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" />
  </center>
 </BorderPane>

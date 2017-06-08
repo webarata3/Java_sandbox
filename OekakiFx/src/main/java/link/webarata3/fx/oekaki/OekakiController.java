@@ -1,10 +1,13 @@
 package link.webarata3.fx.oekaki;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +17,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
+import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -25,18 +30,12 @@ import link.webarata3.fx.oekaki.command.CommandHistory;
 import link.webarata3.fx.oekaki.command.CommandUnit;
 import link.webarata3.fx.oekaki.command.StrokeCommand;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class OekakiController implements Initializable {
     @FXML
     private Canvas canvas;
 
     @FXML
-    private ComboBox lineWidthComboBox;
+    private ComboBox<LineWidthItem> lineWidthComboBox;
 
     private GraphicsContext gc;
 
@@ -58,21 +57,21 @@ public class OekakiController implements Initializable {
 
     @FXML
     private void onMouseReleased(MouseEvent event) {
-        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(), event.getY());
+        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(),
+                event.getY());
         command.execute();
         currentCommandUnit.add(command);
     }
 
     @FXML
     private void onMouseDragged(MouseEvent event) {
-        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(), event.getY());
+        Command command = new StrokeCommand(gc, currentColor, currentLineWidth, startX, startY, event.getX(),
+                event.getY());
         command.execute();
         currentCommandUnit.add(command);
         startX = event.getX();
         startY = event.getY();
     }
-
-    private double h = 0.0;
 
     @FXML
     private void onActionSaveAs(ActionEvent event) {
@@ -105,13 +104,8 @@ public class OekakiController implements Initializable {
     }
 
     @FXML
-    private void onClickLineWidthComboBOx(ActionEvent event) {
-        currentLineWidth = Integer.parseInt(lineWidthComboBox.getValue().toString());
-    }
-
-    @FXML
-    private void onClickBoldButton(ActionEvent event) {
-        currentLineWidth += 1;
+    private void onClickLineWidthComboBox(ActionEvent event) {
+        currentLineWidth = lineWidthComboBox.getValue().getLineWidth();
     }
 
     @FXML
@@ -127,8 +121,43 @@ public class OekakiController implements Initializable {
         commandHistory = new CommandHistory();
         currentLineWidth = 1;
 
-        ObservableList<Integer> options = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 10, 16, 24, 36);
-        lineWidthComboBox.setItems(options);
+        // lineWidthComboBox.setCellFactory(v -> new LineWidthCell());
+        // lineWidthComboBox.setButtonCell(new LineWidthCell());
+        lineWidthComboBox.setButtonCell(new ListCell<LineWidthItem>() {
+            @Override
+            protected void updateItem(LineWidthItem item, boolean empty) {
+                System.out.println("ButtonCell");
+                super.updateItem(item, empty);
+                setText(null);
+                if (empty || item == null)
+                    return;
+
+                Image icon = new Image(OekakiController.class.getResourceAsStream(item.getIconPath()));
+                ImageView imageView = new ImageView();
+                imageView.setImage(icon);
+                setGraphic(imageView);
+            }
+        });
+        lineWidthComboBox.setCellFactory(v -> new ListCell<LineWidthItem>() {
+            private ImageView imageView;
+
+            @Override
+            protected void updateItem(LineWidthItem item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(null);
+                if (empty || item == null)
+                    return;
+
+                Image icon = new Image(OekakiController.class.getResourceAsStream(item.getIconPath()));
+                ImageView imageView = new ImageView();
+                imageView.setImage(icon);
+                setGraphic(imageView);
+            }
+        });
+
+        lineWidthComboBox.getItems().addAll(new LineWidthItem("01.png", 1), new LineWidthItem("02.png", 2),
+                new LineWidthItem("03.png", 3), new LineWidthItem("04.png", 4));
+        lineWidthComboBox.setButtonCell(new ListCell<>());
         lineWidthComboBox.getSelectionModel().selectFirst();
     }
 }
