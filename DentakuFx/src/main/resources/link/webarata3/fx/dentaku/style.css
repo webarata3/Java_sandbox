@@ -1,0 +1,12 @@
+.root {
+  -fx-font-family: monospace;
+}
+
+#resultLabel {
+  -fx-font-size: 14pt;
+  -fx-padding: 5px;
+}
+
+Button {
+  -fx-font-size: 14pt;
+}

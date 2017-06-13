@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import java.net.URL?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
- fx:controller="link.webarata3.fx.dentaku.DentakuController">
+            fx:controller="link.webarata3.fx.dentaku.DentakuController">
+ <stylesheets>
+  <URL value="@style.css"/>
+ </stylesheets>
+ <top>
+  <Label fx:id="resultLabel" prefWidth="200" alignment="CENTER_RIGHT" maxWidth="Infinity"/>
+ </top>
  <center>
+  <GridPane>
+   <columnConstraints>
+    <ColumnConstraints prefWidth="50.0" hgrow="SOMETIMES"/>
+    <ColumnConstraints prefWidth="50.0" hgrow="SOMETIMES"/>
+    <ColumnConstraints prefWidth="50.0" hgrow="SOMETIMES"/>
+    <ColumnConstraints prefWidth="50.0" hgrow="SOMETIMES"/>
+   </columnConstraints>
+   <rowConstraints>
+    <RowConstraints prefHeight="50.0" vgrow="SOMETIMES"/>
+    <RowConstraints prefHeight="50.0" vgrow="SOMETIMES"/>
+    <RowConstraints prefHeight="50.0" vgrow="SOMETIMES"/>
+    <RowConstraints prefHeight="50.0" vgrow="SOMETIMES"/>
+    <RowConstraints prefHeight="50.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <Button text="C" GridPane.columnIndex="3" GridPane.rowIndex="0" onAction="#onClickClearButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="7" GridPane.columnIndex="0" GridPane.rowIndex="1" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="8" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="9" GridPane.columnIndex="2" GridPane.rowIndex="1"  onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="÷" GridPane.columnIndex="3" GridPane.rowIndex="1" onAction="#onClickOperatorButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+
+   <Button text="4" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="5" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="6" GridPane.columnIndex="2" GridPane.rowIndex="2" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="×" GridPane.columnIndex="3" GridPane.rowIndex="2" onAction="#onClickOperatorButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+
+   <Button text="1" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="3" GridPane.columnIndex="2" GridPane.rowIndex="3" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="－" GridPane.columnIndex="3" GridPane.rowIndex="3" onAction="#onClickOperatorButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+
+   <Button text="0" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#onClickNumButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="." GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#onClickDotButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="＝" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#onClickEqualButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+   <Button text="＋" GridPane.columnIndex="3" GridPane.rowIndex="4" onAction="#onClickOperatorButton"
+           prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
+  </GridPane>
  </center>
 </BorderPane>
