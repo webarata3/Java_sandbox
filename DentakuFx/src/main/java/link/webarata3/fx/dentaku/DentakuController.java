@@ -6,30 +6,32 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DentakuController implements Initializable {
     enum Operator {
         PLUS {
-            public int calc(int beforeNum, int num) {
-                return beforeNum + num;
+            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
+                return beforeNum.add(num);
             }
         }, MINUS {
-            public int calc(int beforeNum, int num) {
-                return beforeNum - num;
+            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
+                return beforeNum.min(num);
             }
         }, MULTIPLY {
-            public int calc(int beforeNum, int num) {
-                return beforeNum * num;
+            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
+                return beforeNum.multiply(num);
             }
         }, DIVIDE {
-            public int calc(int beforeNum, int num) {
-                return beforeNum / num;
+            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
+                return beforeNum.divide(num, RoundingMode.HALF_UP);
             }
         };
 
-        public abstract int calc(int beforeNum, int num);
+        public abstract BigDecimal calc(BigDecimal beforeNum, BigDecimal num);
 
         public static Operator getOperator(String operator) {
             switch (operator) {
@@ -92,10 +94,10 @@ public class DentakuController implements Initializable {
 
     @FXML
     private void onClickEqualButton() {
-        int beforeNum = Integer.parseInt(beforeBuffer);
-        int num = beforeNum;
+        BigDecimal beforeNum = new BigDecimal(beforeBuffer);
+        BigDecimal num = beforeNum;
         if (!buffer.equals("")) {
-            num = Integer.parseInt(buffer);
+            num = new BigDecimal(buffer);
         }
         buffer = String.valueOf(currentOperator.calc(beforeNum, num));
 
