@@ -1,13 +1,15 @@
 package link.webarata3.fx.dentaku;
 
+import sun.tools.jstat.Operator;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class DentakuModel {
     private static final DentakuModel dentakuModel = new DentakuModel();
 
-    private String beforeBuffer;
-    private String currentBuffer;
+    private BigDecimal beforeValue;
+    private BigDecimal currentValue;
 
     /**
      * 現在の演算子
@@ -19,6 +21,11 @@ public class DentakuModel {
      */
     private boolean isResult;
 
+    /**
+     * 直前の操作が = かどうか
+     */
+    private boolean isJustBeforeEqual;
+
     private DentakuModel() {
         clearBuffer();
     }
@@ -27,41 +34,36 @@ public class DentakuModel {
         return dentakuModel;
     }
 
-    public String getCurrentBuffer() {
-        return currentBuffer;
+    public BigDecimal getCurrentBuffer() {
+        return currentValue;
     }
 
     public void clearBuffer() {
-        beforeBuffer = "";
-        currentBuffer = "";
+        beforeValue = null;
+        currentValue = BigDecimal.ZERO;
+        isResult = false;
+        isJustBeforeEqual = false;
     }
 
     public void appendNumber(int num) {
         if (isResult) {
-            currentBuffer = beforeBuffer;
+            currentValue = beforeValue;
         }
-        if (currentBuffer.length() >= 10) return;
-        if (num == 0 && currentBuffer.equals("")) return;
-        currentBuffer = currentBuffer + num;
+
+        currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
     }
 
     public void setOperator(String operator) {
         currentOperator = Operator.getOperator(operator);
-        if (currentBuffer.equals("")) {
-            currentBuffer = beforeBuffer;
-        }
-        beforeBuffer = currentBuffer;
-        currentBuffer = "";
+        beforeValue = currentValue;
+        currentValue = BigDecimal.ZERO;
     }
 
     public void calc() {
-        BigDecimal beforeNum = new BigDecimal(beforeBuffer);
-        BigDecimal currentNum = beforeNum;
-        if (!currentBuffer.equals("")) {
-            currentNum = new BigDecimal(currentBuffer);
+        if (beforeValue == null) {
+            beforeValue = BigDecimal.ZERO;
         }
-
-        currentBuffer = currentOperator.calc(beforeNum, currentNum).toPlainString();
+        currentValue = currentOperator.calc(beforeValue, currentValue);
     }
 
     enum Operator {

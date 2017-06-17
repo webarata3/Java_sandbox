@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -77,13 +78,9 @@ public class DentakuController implements Initializable {
     }
 
     private void display() {
-        String currentBuffer = dentakuModel.getCurrentBuffer();
-        if (currentBuffer.equals("")) {
-            resultLabel.setText("0");
-        } else {
-            currentBuffer = removeFollowingZero(currentBuffer);
-            resultLabel.setText(currentBuffer);
-        }
+        BigDecimal currentValue = dentakuModel.getCurrentBuffer();
+       // currentBuffer = removeFollowingZero(currentBuffer);
+        resultLabel.setText(currentValue.toPlainString());
     }
 
     @Override
