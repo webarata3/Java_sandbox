@@ -56,7 +56,6 @@ public class DentakuModel {
         beforeValue = null;
         currentValue = BigDecimal.ZERO;
         isResult = false;
-        isNumberInput = false;
 
         notifyUpdate();
     }
@@ -64,17 +63,26 @@ public class DentakuModel {
     public void appendNumber(int num) {
         if (isResult) {
             currentValue = beforeValue;
+            currentValue = BigDecimal.ZERO;
         }
 
         currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
-
-        isNumberInput = true;
 
         notifyUpdate();
     }
 
     public void setOperator(String operator) {
+        if (beforeValue != null) {
+            calc();
+            currentOperator = Operator.getOperator(operator);
+            beforeValue = currentValue;
+            isResult = true;
+            return;
+        }
+
         currentOperator = Operator.getOperator(operator);
+
+
         beforeValue = currentValue;
         currentValue = BigDecimal.ZERO;
 
@@ -86,7 +94,6 @@ public class DentakuModel {
             beforeValue = BigDecimal.ZERO;
         }
         currentValue = currentOperator.calc(beforeValue, currentValue);
-        isNumberInput = false;
         isResult = true;
 
         notifyUpdate();
