@@ -8,9 +8,10 @@ import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class DentakuController implements Initializable {
+public class DentakuController implements Initializable, DentakuModel.Observer {
     private DentakuModel dentakuModel;
 
     @FXML
@@ -18,7 +19,6 @@ public class DentakuController implements Initializable {
 
      private void appendNumber(int num) {
         dentakuModel.appendNumber(num);
-        display();
     }
 
     @FXML
@@ -30,8 +30,6 @@ public class DentakuController implements Initializable {
     @FXML
     private void onClickClearButton() {
         dentakuModel.clearBuffer();
-
-        display();
     }
 
     @FXML
@@ -43,8 +41,6 @@ public class DentakuController implements Initializable {
     @FXML
     private void onClickEqualButton() {
         dentakuModel.calc();
-
-        display();
     }
 
     /**
@@ -77,16 +73,15 @@ public class DentakuController implements Initializable {
     private void onClickDotButton() {
     }
 
-    private void display() {
-        BigDecimal currentValue = dentakuModel.getCurrentBuffer();
-       // currentBuffer = removeFollowingZero(currentBuffer);
-        resultLabel.setText(currentValue.toPlainString());
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dentakuModel = DentakuModel.getInstance();
+        dentakuModel.addObserver(this);
+    }
 
-        display();
+    @Override
+    public void updateCurrentValue() {
+        BigDecimal currentValue = dentakuModel.getCurrentBuffer();
+        resultLabel.setText(currentValue.toPlainString());
     }
 }

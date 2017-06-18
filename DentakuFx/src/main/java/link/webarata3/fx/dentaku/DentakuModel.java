@@ -4,8 +4,17 @@ import sun.tools.jstat.Operator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DentakuModel {
+
+    public static interface Observer {
+        void updateCurrentValue();
+    }
+
+    private List<Observer> observerList;
+
     private static final DentakuModel dentakuModel = new DentakuModel();
 
     private BigDecimal beforeValue;
@@ -22,12 +31,17 @@ public class DentakuModel {
     private boolean isResult;
 
     /**
-     * 直前の操作が = かどうか
+     * 数字を入れた後かどうか
      */
-    private boolean isJustBeforeEqual;
+    private boolean isNumberInput;
 
     private DentakuModel() {
+        observerList = new ArrayList<>();
         clearBuffer();
+    }
+
+    public void addObserver(Observer observer) {
+        observerList.add(observer);
     }
 
     public static DentakuModel getInstance() {
@@ -42,7 +56,9 @@ public class DentakuModel {
         beforeValue = null;
         currentValue = BigDecimal.ZERO;
         isResult = false;
-        isJustBeforeEqual = false;
+        isNumberInput = false;
+
+        notifyUpdate();
     }
 
     public void appendNumber(int num) {
@@ -51,12 +67,18 @@ public class DentakuModel {
         }
 
         currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
+
+        isNumberInput = true;
+
+        notifyUpdate();
     }
 
     public void setOperator(String operator) {
         currentOperator = Operator.getOperator(operator);
         beforeValue = currentValue;
         currentValue = BigDecimal.ZERO;
+
+        isNumberInput = false;
     }
 
     public void calc() {
@@ -64,6 +86,14 @@ public class DentakuModel {
             beforeValue = BigDecimal.ZERO;
         }
         currentValue = currentOperator.calc(beforeValue, currentValue);
+        isNumberInput = false;
+        isResult = true;
+
+        notifyUpdate();
+    }
+
+    private void notifyUpdate() {
+        observerList.forEach(Observer::updateCurrentValue);
     }
 
     enum Operator {
