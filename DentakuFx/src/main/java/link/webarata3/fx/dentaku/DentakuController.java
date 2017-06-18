@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DentakuController implements Initializable, DentakuModel.Observer {
@@ -29,13 +28,14 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
 
     @FXML
     private void onClickClearButton() {
-        dentakuModel.clearBuffer();
+        dentakuModel.clear();
+        dentakuModel.clear();
     }
 
     @FXML
     private void onClickOperatorButton(ActionEvent event) {
         String operator = ((Button) event.getSource()).getText();
-        dentakuModel.setOperator(operator);
+        dentakuModel.setOperator(DentakuModel.Operator.getOperator(operator));
    }
 
     @FXML
@@ -81,7 +81,7 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
 
     @Override
     public void updateCurrentValue() {
-        BigDecimal currentValue = dentakuModel.getCurrentBuffer();
+        BigDecimal currentValue = dentakuModel.getCurrentValue();
         resultLabel.setText(currentValue.toPlainString());
     }
 }

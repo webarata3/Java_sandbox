@@ -17,8 +17,8 @@ public class DentakuModel {
 
     private static final DentakuModel dentakuModel = new DentakuModel();
 
-    private BigDecimal beforeValue;
-    private BigDecimal currentValue;
+    BigDecimal beforeValue;
+    BigDecimal currentValue;
 
     /**
      * 現在の演算子
@@ -37,7 +37,7 @@ public class DentakuModel {
 
     private DentakuModel() {
         observerList = new ArrayList<>();
-        clearBuffer();
+        clear();
     }
 
     public void addObserver(Observer observer) {
@@ -48,11 +48,11 @@ public class DentakuModel {
         return dentakuModel;
     }
 
-    public BigDecimal getCurrentBuffer() {
+    public BigDecimal getCurrentValue() {
         return currentValue;
     }
 
-    public void clearBuffer() {
+    public void clear() {
         beforeValue = null;
         currentValue = BigDecimal.ZERO;
         isResult = false;
@@ -71,16 +71,16 @@ public class DentakuModel {
         notifyUpdate();
     }
 
-    public void setOperator(String operator) {
+    public void setOperator(Operator operator) {
         if (beforeValue != null) {
             calc();
-            currentOperator = Operator.getOperator(operator);
+            currentOperator = operator;
             beforeValue = currentValue;
             isResult = true;
             return;
         }
 
-        currentOperator = Operator.getOperator(operator);
+        currentOperator = operator;
 
 
         beforeValue = currentValue;
