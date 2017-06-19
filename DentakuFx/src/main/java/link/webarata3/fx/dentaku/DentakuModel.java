@@ -1,15 +1,12 @@
 package link.webarata3.fx.dentaku;
 
-import sun.tools.jstat.Operator;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DentakuModel {
-
-    public static interface Observer {
+    public interface Observer {
         void updateCurrentValue();
     }
 
@@ -17,8 +14,8 @@ public class DentakuModel {
 
     private static final DentakuModel dentakuModel = new DentakuModel();
 
-    BigDecimal beforeValue;
-    BigDecimal currentValue;
+    private BigDecimal beforeValue;
+    private BigDecimal currentValue;
 
     /**
      * 現在の演算子
@@ -29,11 +26,6 @@ public class DentakuModel {
      * 結果を表示した後かどうか
      */
     private boolean isResult;
-
-    /**
-     * 数字を入れた後かどうか
-     */
-    private boolean isNumberInput;
 
     private DentakuModel() {
         observerList = new ArrayList<>();
@@ -62,8 +54,9 @@ public class DentakuModel {
 
     public void appendNumber(int num) {
         if (isResult) {
-            currentValue = beforeValue;
+            beforeValue = currentValue;
             currentValue = BigDecimal.ZERO;
+            isResult = false;
         }
 
         currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
@@ -72,6 +65,12 @@ public class DentakuModel {
     }
 
     public void setOperator(Operator operator) {
+        // 直前に計算結果が出ている場合には、演算子のみを変更する
+        if (isResult) {
+            currentOperator = operator;
+            return;
+        }
+
         if (beforeValue != null) {
             calc();
             currentOperator = operator;
@@ -82,18 +81,21 @@ public class DentakuModel {
 
         currentOperator = operator;
 
-
         beforeValue = currentValue;
         currentValue = BigDecimal.ZERO;
-
-        isNumberInput = false;
     }
 
     public void calc() {
-        if (beforeValue == null) {
-            beforeValue = BigDecimal.ZERO;
+        // 直前に結果の計算をしている場合には、同じ計算を再度行う
+        if (isResult) {
+            currentValue = currentOperator.calc(beforeValue, currentValue);
+            notifyUpdate();
+            return;
         }
+        BigDecimal tempValue = currentValue;
         currentValue = currentOperator.calc(beforeValue, currentValue);
+        beforeValue = tempValue;
+
         isResult = true;
 
         notifyUpdate();
@@ -105,24 +107,24 @@ public class DentakuModel {
 
     enum Operator {
         PLUS {
-            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
-                return beforeNum.add(num);
+            public BigDecimal calc(BigDecimal beforeValue, BigDecimal currentValue) {
+                return beforeValue.add(currentValue);
             }
         }, MINUS {
-            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
-                return beforeNum.subtract(num);
+            public BigDecimal calc(BigDecimal beforeValue, BigDecimal currentValue) {
+                return beforeValue.subtract(currentValue);
             }
         }, MULTIPLY {
-            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
-                return beforeNum.multiply(num);
+            public BigDecimal calc(BigDecimal beforeValue, BigDecimal currentValue) {
+                return beforeValue.multiply(currentValue);
             }
         }, DIVIDE {
-            public BigDecimal calc(BigDecimal beforeNum, BigDecimal num) {
-                return beforeNum.divide(num, 10, RoundingMode.HALF_UP);
+            public BigDecimal calc(BigDecimal beforeValue, BigDecimal currentValue) {
+                return beforeValue.divide(currentValue, 10, RoundingMode.HALF_UP);
             }
         };
 
-        public abstract BigDecimal calc(BigDecimal beforeNum, BigDecimal num);
+        public abstract BigDecimal calc(BigDecimal beforeValue, BigDecimal currentValue);
 
         public static Operator getOperator(String operator) {
             switch (operator) {

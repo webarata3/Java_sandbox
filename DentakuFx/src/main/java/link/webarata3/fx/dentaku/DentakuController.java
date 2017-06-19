@@ -16,7 +16,7 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     @FXML
     private Label resultLabel;
 
-     private void appendNumber(int num) {
+    private void appendNumber(int num) {
         dentakuModel.appendNumber(num);
     }
 
@@ -29,14 +29,13 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     @FXML
     private void onClickClearButton() {
         dentakuModel.clear();
-        dentakuModel.clear();
     }
 
     @FXML
     private void onClickOperatorButton(ActionEvent event) {
         String operator = ((Button) event.getSource()).getText();
         dentakuModel.setOperator(DentakuModel.Operator.getOperator(operator));
-   }
+    }
 
     @FXML
     private void onClickEqualButton() {
@@ -46,7 +45,9 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     /**
      * 小数の点の後の0の連続を削除する
      */
-    private String removeFollowingZero(String target) {
+    private String removeFollowingZero(BigDecimal decimal) {
+        String target = decimal.toPlainString();
+
         int dotLoc = target.indexOf(".");
 
         if (dotLoc == -1) {
@@ -82,6 +83,6 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     @Override
     public void updateCurrentValue() {
         BigDecimal currentValue = dentakuModel.getCurrentValue();
-        resultLabel.setText(currentValue.toPlainString());
+        resultLabel.setText(removeFollowingZero(currentValue));
     }
 }
