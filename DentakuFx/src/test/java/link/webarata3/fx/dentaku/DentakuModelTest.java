@@ -68,15 +68,41 @@ public class DentakuModelTest {
 
     @Test
     public void 数値入力の計算後equalを連続して足し算をするテスト() {
-        dentakuModel.appendNumber(1);
+        dentakuModel.appendNumber(-5);
         dentakuModel.setOperator(Operator.PLUS);
         dentakuModel.appendNumber(3);
         dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(-2)));
+        dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(1)));
+        dentakuModel.calc();
         assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(4)));
+    }
+
+    @Test
+    public void 数値入力の計算後equalを連続して引き算をするテスト() {
+        dentakuModel.appendNumber(5);
+        dentakuModel.setOperator(Operator.MINUS);
+        dentakuModel.appendNumber(3);
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(7)));
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(2)));
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(10)));
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(-1)));
+        dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(-4)));
+    }
+
+    @Test
+    public void 数値入力の計算後equalを連続して掛け算をするテスト() {
+        dentakuModel.appendNumber(5);
+        dentakuModel.setOperator(Operator.MULTIPLY);
+        dentakuModel.appendNumber(3);
+        dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(15)));
+        dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(45)));
+        dentakuModel.calc();
+        assertThat(dentakuModel.getCurrentValue(), is(new BigDecimal(135)));
     }
 
     @Test

@@ -88,7 +88,7 @@ public class DentakuModel {
     public void calc() {
         // 直前に結果の計算をしている場合には、同じ計算を再度行う
         if (isResult) {
-            currentValue = currentOperator.calc(beforeValue, currentValue);
+            currentValue = currentOperator.calc(currentValue, beforeValue);
             notifyUpdate();
             return;
         }
