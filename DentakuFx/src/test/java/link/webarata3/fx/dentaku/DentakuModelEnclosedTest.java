@@ -119,8 +119,7 @@ public class DentakuModelEnclosedTest {
             dentakuModel.setOperator(fixture.operator);
             dentakuModel.appendNumber(fixture.y);
             dentakuModel.calc();
-            BigDecimal resultValue = dentakuModel.getCurrentValue();
-            resultValue.setScale(10);
+            BigDecimal resultValue = dentakuModel.getCurrentValue().setScale(10, RoundingMode.HALF_UP);
             assertThat(resultValue, is(fixture.answer.setScale(10, RoundingMode.HALF_UP)));
         }
     }

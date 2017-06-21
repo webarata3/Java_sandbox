@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static link.webarata3.fx.dentaku.DentakuModel.Operator;
 import static org.hamcrest.Matchers.is;
@@ -113,10 +114,10 @@ public class DentakuModelTest {
         dentakuModel.setOperator(Operator.DIVIDE);
         dentakuModel.appendNumber(2);
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(128)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(128)));
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(64)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(64)));
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(32)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(32)));
     }
 }
