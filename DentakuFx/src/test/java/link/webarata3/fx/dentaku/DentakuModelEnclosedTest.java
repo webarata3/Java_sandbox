@@ -85,8 +85,8 @@ public class DentakuModelEnclosedTest {
         @DataPoints
         public static Fixture[] PARAMs = {
             new Fixture(4, Operator.DIVIDE, 2, new BigDecimal(2)),
-            new Fixture(2, Operator.DIVIDE, 5, new BigDecimal(0.4)),
-            new Fixture(1, Operator.DIVIDE, 3, new BigDecimal(0.3333333333))
+            new Fixture(2, Operator.DIVIDE, 5, new BigDecimal("0.4")),
+            new Fixture(1, Operator.DIVIDE, 3, new BigDecimal("0.3333333333"))
         };
 
         static class Fixture {
@@ -119,7 +119,8 @@ public class DentakuModelEnclosedTest {
             dentakuModel.setOperator(fixture.operator);
             dentakuModel.appendNumber(fixture.y);
             dentakuModel.calc();
-            BigDecimal resultValue = dentakuModel.getCurrentValue().setScale(10, RoundingMode.HALF_UP);
+            BigDecimal resultValue = dentakuModel.getCurrentValue();
+            resultValue.setScale(10);
             assertThat(resultValue, is(fixture.answer.setScale(10, RoundingMode.HALF_UP)));
         }
     }

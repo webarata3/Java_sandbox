@@ -1,5 +1,7 @@
 package link.webarata3.fx.dentaku;
 
+import static link.webarata3.fx.dentaku.DentakuModel.*;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,7 +12,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DentakuController implements Initializable, DentakuModel.Observer {
+public class DentakuController implements Initializable, Observer {
     private DentakuModel dentakuModel;
 
     @FXML
@@ -27,6 +29,11 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     }
 
     @FXML
+    private void onClickDecimalPointButton() {
+        dentakuModel.appendDecimalPoint();
+    }
+
+    @FXML
     private void onClickClearButton() {
         dentakuModel.clear();
     }
@@ -34,7 +41,7 @@ public class DentakuController implements Initializable, DentakuModel.Observer {
     @FXML
     private void onClickOperatorButton(ActionEvent event) {
         String operator = ((Button) event.getSource()).getText();
-        dentakuModel.setOperator(DentakuModel.Operator.getOperator(operator));
+        dentakuModel.setOperator(Operator.getOperator(operator));
     }
 
     @FXML

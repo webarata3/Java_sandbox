@@ -41,6 +41,51 @@ public class DentakuModelTest {
     }
 
     @Test
+    public void 小数点を入力し小数点数以下の数字を入力しない() {
+        dentakuModel.appendDecimalPoint();
+        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(0)));
+    }
+
+    @Test
+    public void 小数点を連続入力した場合() {
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendDecimalPoint();
+        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(0)));
+    }
+
+    @Test
+    public void 小数点point1と入力した場合() {
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendNumber(1);
+        assertThat(dentakuModel.getCurrentValue().setScale(1, RoundingMode.HALF_UP), is(new BigDecimal("0.1")));
+    }
+
+    @Test
+    public void 小数点point1point2と入力() {
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendNumber(1);
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendNumber(2);
+        assertThat(dentakuModel.getCurrentValue().setScale(2, RoundingMode.HALF_UP), is(new BigDecimal("0.12")));
+    }
+
+    @Test
+    public void 小数点1point2と入力() {
+        dentakuModel.appendNumber(1);
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendNumber(2);
+        assertThat(dentakuModel.getCurrentValue().setScale(1, RoundingMode.HALF_UP), is(new BigDecimal("1.2")));
+    }
+
+    @Test
+    public void 演算子の後に小数点point1と入力() {
+        dentakuModel.setOperator(Operator.PLUS);
+        dentakuModel.appendDecimalPoint();
+        dentakuModel.appendNumber(1);
+        assertThat(dentakuModel.getCurrentValue().setScale(1, RoundingMode.HALF_UP), is(new BigDecimal("0.1")));
+    }
+
+    @Test
     public void 計算後の計算のテストかつequalの後に演算子を指定() {
         dentakuModel.appendNumber(1);
         dentakuModel.appendNumber(9);
@@ -114,10 +159,10 @@ public class DentakuModelTest {
         dentakuModel.setOperator(Operator.DIVIDE);
         dentakuModel.appendNumber(2);
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(128)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(128)));
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(64)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(64)));
         dentakuModel.calc();
-        assertThat(dentakuModel.getCurrentValue().setScale(0, RoundingMode.HALF_UP), is(new BigDecimal(32)));
+        assertThat(dentakuModel.getCurrentValue().setScale(0), is(new BigDecimal(32)));
     }
 }

@@ -62,7 +62,7 @@
 
    <Button text="0" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#onClickNumButton"
            prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
-   <Button text="." GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#onClickDotButton"
+   <Button text="." GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#onClickDecimalPointButton"
            prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>
    <Button text="＝" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#onClickEqualButton"
            prefWidth="50" prefHeight="50" maxWidth="Infinity" maxHeight="Infinity"/>

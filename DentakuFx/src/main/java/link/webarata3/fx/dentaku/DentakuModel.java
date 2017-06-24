@@ -17,6 +17,8 @@ public class DentakuModel {
     private BigDecimal beforeValue;
     private BigDecimal currentValue;
 
+    private BigDecimal decimalBase;
+
     /**
      * 現在の演算子
      */
@@ -48,6 +50,7 @@ public class DentakuModel {
         beforeValue = null;
         currentValue = BigDecimal.ZERO;
         isResult = false;
+        decimalBase = null;
 
         notifyUpdate();
     }
@@ -59,12 +62,27 @@ public class DentakuModel {
             isResult = false;
         }
 
-        currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
+        if (decimalBase == null) {
+            currentValue = currentValue.multiply(BigDecimal.TEN).add(new BigDecimal(num));
+        } else {
+            currentValue = currentValue.add(decimalBase.multiply(new BigDecimal(num)));
+            decimalBase = decimalBase.divide(new BigDecimal(10));
+        }
 
         notifyUpdate();
     }
 
+    public void appendDecimalPoint() {
+        if (decimalBase == null) {
+            decimalBase= new BigDecimal("0.1");
+
+            notifyUpdate();
+        }
+    }
+
     public void setOperator(Operator operator) {
+        decimalBase = null;
+
         // 直前に計算結果が出ている場合には、演算子のみを変更する
         if (isResult) {
             currentOperator = operator;
