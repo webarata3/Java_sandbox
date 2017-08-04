@@ -2,4 +2,5 @@
 /.idea/libraries/
 /.idea/tasks.xml
 /.idea/workspace.xml
+/out/
 /src/main/resources/jcifs.properties
