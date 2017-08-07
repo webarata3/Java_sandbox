@@ -1,4 +1,4 @@
-package link.webarata3.jcifs;
+package link.webarata3.jcifs.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import jcifs.Config;
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
+import link.webarata3.jcifs.Jcifs;
 
 public class JcifsTest {
     public static void main(String[] args) throws MalformedURLException {
@@ -24,13 +25,12 @@ public class JcifsTest {
         }
 
 //        Config.setProperties(properties);
+        Jcifs jcifs = new Jcifs(
+            properties.getProperty("server"),
+            properties.getProperty("username"),
+            properties.getProperty("password"));
 
-        String url = "smb://" + properties.getProperty("server") + "/public/old-ゴミ/鍵.txt";
-        NtlmPasswordAuthentication auth =
-            new NtlmPasswordAuthentication("",properties.getProperty("username"), properties.getProperty("password"));
-
-        SmbFile smbFile = new SmbFile(url, auth);
-        try (SmbFileInputStream sfis = new SmbFileInputStream(smbFile);
+        try (SmbFileInputStream sfis = new SmbFileInputStream(jcifs.getSmbFile("/public/old-ゴミ/鍵.txt"));
                 BufferedReader br = new BufferedReader(new InputStreamReader(sfis))) {
 
             String line = null;
