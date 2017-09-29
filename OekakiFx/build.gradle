@@ -16,8 +16,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-eclipse {
-    project {
-        name = 'OekakiFx'
+// 実行可能Jarの作成
+jar {
+    manifest {
+        attributes 'Main-Class': 'link.webarata3.fx.oekaki.OekakiApp'
     }
 }
